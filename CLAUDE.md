@@ -2,6 +2,41 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git Workflow and Linear Integration (CRITICAL - READ FIRST)
+
+### Linear Branch Naming Convention
+**ALWAYS check Linear for expected branch name** - Linear auto-generates expected branch names in the `gitBranchName` field:
+- **Never guess or assume branch names** - always check the issue details first using `mcp__Linear__get_issue`
+- Example: `alex/for-129-create-visual-strategic-framework`
+- **Format Pattern**: `alex/for-[issue-number]-[kebab-case-descriptive-title]`
+- **Branch Lifecycle**: Once a PR is created, do NOT reuse that branch for new work - create new branches for new work
+
+### Git Workflow (CRITICAL - ALWAYS FOLLOW)
+- **NEVER push directly to main branch** - all changes must go through pull requests
+- **ALWAYS create feature branches** for any changes, even simple fixes
+- Use Linear branch names from `gitBranchName` field (check issue first with `mcp__Linear__get_issue`)
+- Always commit and push changes to feature branches
+- **ALWAYS create pull requests** for merging to main - no direct pushes allowed
+- Use descriptive commit messages with Linear issue references and magic words
+- **Line Number Preference**: Include specific line numbers in commit messages when referencing complex document changes for precise tracking
+- Example: "Completes FOR-74: Add financial quantification and navigation to BISOPRO-02 Problem Statement"
+- Example with line numbers: "Completes FOR-76: Transform BISOPRO-06 Authority Framework with executive summary (lines 3-26), navigation (lines 30-55), and visual elements (lines 160-236)"
+
+### Linear Magic Words for Commits
+**Closing Magic Words (Complete/Close Issues):**
+- **close, closes, closed, closing**: Standard issue closure
+- **fix, fixes, fixed, fixing**: For bug fixes
+- **resolve, resolves, resolved, resolving**: For problem resolution
+- **complete, completes, completed, completing**: For task completion
+
+**Non-Closing Magic Words (Reference Without Closing):**
+- **ref, refs, references**: Simple reference to issue
+- **part of**: Partial contribution to issue
+- **related to**: Related work
+- **contributes to**: Contributing work
+- **toward, towards**: Work progressing toward issue resolution
+
+
 ## Development Commands
 
 ```bash
@@ -71,3 +106,55 @@ lib/
 To add projects, edit `lib/data.ts` and add objects to the projects array with required fields: name, position, category, risk, complexity, timeline.
 
 The application uses a design system with Apple-level aesthetics and follows responsive design patterns with mobile-first approach.
+
+## Linear Issue Integration
+- This project uses Linear for task management (issues like FOR-129, FOR-123, etc.)
+- When committing changes that address Linear issues, use magic words in commit messages
+
+### Closing Magic Words (Complete/Close Issues)
+- **close, closes, closed, closing**: Standard issue closure
+- **fix, fixes, fixed, fixing**: For bug fixes
+- **resolve, resolves, resolved, resolving**: For problem resolution
+- **complete, completes, completed, completing**: For task completion
+
+### Non-Closing Magic Words (Reference Without Closing)
+- **ref, refs, references**: Simple reference to issue
+- **part of**: Partial contribution to issue
+- **related to**: Related work
+- **contributes to**: Contributing work
+- **toward, towards**: Work progressing toward issue resolution
+
+## Linear Best Practices
+
+### Issue Title Management
+- **NEVER include "FOR-##:" prefixes in Linear issue titles** - these are the project's internal numbering system
+- Issue titles should be clean, professional descriptions without identifier prefixes
+- Example: Use "Visual Framework Standardization" NOT "FOR-90: Visual Framework Standardization"
+- When creating or updating issues, use descriptive titles that stand alone
+
+### Comprehensive Issue Querying
+- **Always search exhaustively** when asked to find or update Linear issues
+- Use multiple search strategies to ensure complete coverage:
+  1. Search by team ID with pagination: `mcp__Linear__list_issues` with `teamId` and `limit` parameters
+  2. Search by project ID: `mcp__Linear__list_issues` with `projectId` parameter  
+  3. Search by query terms: Use `query` parameter to find specific content
+  4. For large result sets, use pagination with `after` parameter to get all results
+- **Check backlog systematically** - don't assume first search captures everything
+- When updating multiple issues, verify each change by fetching the issue afterward
+
+### Issue Search Troubleshooting
+- If search returns "exceeds maximum tokens" error, use smaller `limit` values (10-25)
+- Use `after` parameter for pagination to get complete issue lists
+- Combine multiple search approaches: team-based, project-based, and query-based
+- Always verify team and project IDs are correct before searching
+
+### Issue Update Verification
+- After updating issue titles, fetch the issue again to confirm changes applied
+- When asked to update "all issues with X", search comprehensively first, then update systematically
+- Keep track of updated issues to avoid missing any in the batch
+
+### Project Structure Understanding
+- Project: "CISO Work Cycle"
+- Team: "FS-ISAC Collab"
+- Always filter by correct project when searching to avoid irrelevant results
+
