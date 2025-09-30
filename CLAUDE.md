@@ -55,11 +55,11 @@ npm run lint
 
 ## Project Architecture
 
-This is a Next.js 13.5 application using the App Router that visualizes cybersecurity project portfolios on an interactive Progress Curve curve for CISOs.
+This is a Next.js 13.5 application using the App Router that visualizes cybersecurity project portfolios on an interactive maturity curve for CISOs.
 
 ### Key Components
 
-- **ProgressCurve.tsx**: Core visualization component that renders the interactive Progress Curve curve with SVG. Contains complex mathematical calculations for curve positioning and responsive design logic.
+- **ProgressCurve.tsx**: Core visualization component that renders the interactive progress curve with SVG. Contains complex mathematical calculations for curve positioning and responsive design logic.
 - **Project Data Model**: All project data is centralized in `lib/data.ts` with TypeScript interfaces defining project structure, timeline markers, and category classifications.
 
 ### Data Structure

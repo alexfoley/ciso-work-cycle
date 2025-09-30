@@ -4,7 +4,7 @@ A sophisticated project management and visualization platform designed specifica
 
 ## 🎯 Overview
 
-The CISO Work Cycle transforms complex project portfolios into intuitive visual narratives, enabling security leaders to effectively communicate project status, resource allocation, and strategic priorities to stakeholders at all levels. Built on the proven custom maturity curve methodology, this platform provides a unique perspective on cybersecurity project maturity and organizational readiness.
+The CISO Work Cycle transforms complex project portfolios into intuitive visual narratives, enabling security leaders to effectively communicate project status, resource allocation, and strategic priorities to stakeholders at all levels. Built using a custom maturity curve methodology, this platform provides a unique perspective on cybersecurity project maturity and organizational readiness.
 
 ## ✨ Key Capabilities
 
