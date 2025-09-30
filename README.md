@@ -4,12 +4,12 @@ A sophisticated project management and visualization platform designed specifica
 
 ## 🎯 Overview
 
-The CISO Work Cycle transforms complex project portfolios into intuitive visual narratives, enabling security leaders to effectively communicate project status, resource allocation, and strategic priorities to stakeholders at all levels. Built on the proven Gartner Hype Cycle methodology, this platform provides a unique perspective on cybersecurity project maturity and organizational readiness.
+The CISO Work Cycle transforms complex project portfolios into intuitive visual narratives, enabling security leaders to effectively communicate project status, resource allocation, and strategic priorities to stakeholders at all levels. Built using a custom maturity curve methodology, this platform provides a unique perspective on cybersecurity project maturity and organizational readiness.
 
 ## ✨ Key Capabilities
 
 ### 📊 **Visual Project Intelligence**
-- **Interactive Hype Cycle Visualization**: Projects are plotted along a sophisticated curve representing the journey from initial concept through peak expectations to productive implementation
+- **Interactive Progress Curve Visualization**: Projects are plotted along a sophisticated curve representing the journey from initial concept through peak expectations to productive implementation
 - **Real-time Progress Tracking**: Dynamic positioning shows where each initiative stands in its lifecycle
 - **Risk & Complexity Assessment**: Color-coded indicators provide instant insight into project challenges and resource requirements
 

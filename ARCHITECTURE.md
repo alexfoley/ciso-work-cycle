@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-The CISO Work Cycle is an executive-grade visualization platform that transforms complex cybersecurity project portfolios into intuitive, board-ready presentations using an interactive Hype Cycle methodology. Built for Chief Information Security Officers to communicate security initiatives, resource allocation, and strategic priorities to C-suite executives and board members.
+The CISO Work Cycle is an executive-grade visualization platform that transforms complex cybersecurity project portfolios into intuitive, board-ready presentations using an interactive maturity curve methodology. Built for Chief Information Security Officers to communicate security initiatives, resource allocation, and strategic priorities to C-suite executives and board members.
 
 ## C4 Model Architecture
 
@@ -169,7 +169,7 @@ graph TB
 
 ```
 Executive Presentation Layer
-├── Primary Focus: Hype Cycle Curve
+├── Primary Focus: Progress Curve
 │   ├── Mathematical Bezier curves
 │   ├── Responsive SVG rendering
 │   └── 60fps animation targets
