@@ -93,3 +93,11 @@ export const timelineMarkers = {
   'next year': '▲',
   'on hold': '⊗'
 } as const;
+
+// Project categories for executive understanding
+export const projectCategories = {
+  'Unplanned Work': 'hsl(var(--destructive))',
+  'IS Projects': 'hsl(var(--primary))',
+  'IT/Business Projects': 'hsl(var(--secondary))',
+  'Business-as-Usual': 'hsl(var(--muted))'
+} as const;

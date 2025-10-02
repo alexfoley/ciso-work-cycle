@@ -35,7 +35,7 @@ The CISO Work Cycle transforms complex project portfolios into intuitive visual 
 ## 🏗️ Technical Architecture
 
 ### **Modern Web Stack**
-- **Next.js 13.5**: React-based framework with App Router for optimal performance
+- **Next.js 14.2**: React-based framework with App Router for optimal performance
 - **TypeScript**: Full type safety ensuring robust, maintainable code
 - **Tailwind CSS**: Utility-first styling for consistent, responsive design
 - **Shadcn/UI**: Premium component library for professional aesthetics
@@ -91,16 +91,22 @@ npm start
 │   ├── layout.tsx         # Root layout component
 │   └── page.tsx           # Main dashboard page
 ├── components/
-│   ├── features/
-│   │   └── ProgressCurve.tsx  # Core visualization component
-│   ├── layout/
+│   ├── features/          # Core business logic components
+│   │   └── ProgressCurve.tsx  # Main visualization component
+│   ├── layout/            # Layout components
 │   │   ├── Header.tsx     # Application header
 │   │   └── Sidebar.tsx    # Project category sidebars
-│   └── ui/                # Reusable UI components
+│   └── ui/                # Shadcn/UI component library
+├── docs/
+│   └── adr/               # Architecture Decision Records
+├── hooks/                 # Custom React hooks
 ├── lib/
 │   ├── data.ts           # Project data and type definitions
-│   └── utils.ts          # Utility functions
-└── README.md
+│   └── utils.ts          # Utility functions and helpers
+├── ARCHITECTURE.md        # C4 model architecture documentation
+├── CLAUDE.md             # AI assistant guidance
+├── README.md             # This file
+└── SECURITY.md           # Security policy and vulnerability reporting
 ```
 
 ## 🎨 Design Philosophy
