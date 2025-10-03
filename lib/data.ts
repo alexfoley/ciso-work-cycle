@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025 Alex Foley
+
 // Project data with relative positions (0-1 along the curve)
 export const projects = [
   {

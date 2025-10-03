@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025 Alex Foley
+
 import { projects, timelineMarkers, projectCategories } from '@/lib/data'
 
 describe('Data Model Validation - Executive Data Integrity', () => {

@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: 2025 Alex Foley
+
 # CISO Work Cycle
 
 A sophisticated project management and visualization platform designed specifically for Chief Information Security Officers (CISOs) to track, analyze, and communicate the progress of cybersecurity initiatives across their organization.

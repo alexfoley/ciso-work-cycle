@@ -1,9 +1,18 @@
 {
-  "name": "nextjs",
+  "name": "ciso-work-cycle",
   "version": "0.1.0",
+  "description": "Executive Project Portfolio Visualization for CISOs - Interactive Curve Dashboard",
+  "license": "AGPL-3.0-or-later",
+  "author": "Alex Foley",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexfoley/ciso-work-cycle.git"
+  },
+  "keywords": ["ciso", "cybersecurity", "portfolio", "visualization", "executive", "dashboard"],
   "private": true,
   "scripts": {
     "update-data": "node scripts/update-data.js",
+    "add-license-headers": "node scripts/add-license-headers.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

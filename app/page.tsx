@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025 Alex Foley
+
 import { ProgressCurve } from '@/components/features/ProgressCurve';
 import { Sidebar } from '@/components/layout/Sidebar';
 
