@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-FileCopyrightText: 2025 Alex Foley
+
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
