@@ -351,7 +351,8 @@ We welcome contributions from the security community! See our [Contributing Guid
 Security is paramount for a CISO tool. We take security seriously:
 
 - **Zero-Vulnerability Baseline**: Dependencies audited regularly with `npm audit`
-- **AGPL-3.0 License**: Source code transparency required
+- **AGPL-3.0 License**: Source code transparency required (see [LICENSING.md](LICENSING.md))
+- **Third-Party Attributions**: All dependencies documented in [NOTICE](NOTICE)
 - **Static Architecture**: No backend, reduced attack surface
 - **WCAG 2.1 AA Compliant**: Accessible to all users
 
