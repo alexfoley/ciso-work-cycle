@@ -121,3 +121,12 @@ npm run test:watch
 Testing for an executive visualization tool isn't about achieving arbitrary coverage percentages. It's about ensuring that when a CISO presents to their board, demonstrates portfolio maturity to stakeholders, or makes strategic decisions based on this visualization, **the tool works flawlessly**.
 
 Our 95% coverage of the core visualization component reflects this priority: we test what matters most for executive confidence and presentation reliability.
+
+---
+
+## Related Documentation
+
+- **[Contributing Guide](../CONTRIBUTING.md#testing-requirements)** - Testing requirements for contributors
+- **[Troubleshooting Guide](troubleshooting.md)** - Solutions for test failures and debugging
+- **[Architecture Documentation](../ARCHITECTURE.md)** - Technical architecture and design decisions
+- **[Data Management Guide](data-management.md)** - CSV workflow that testing validates

@@ -397,6 +397,16 @@ This architecture supports both immediate executive presentation needs and long-
 
 ---
 
+## Related Documentation
+
+- **[Architecture Decision Records](docs/adr/)** - Detailed decision documentation (ADR-001 through ADR-005)
+- **[Security Policy](SECURITY.md)** - Vulnerability disclosure and security practices
+- **[Contributing Guide](CONTRIBUTING.md)** - Development standards and workflow
+- **[Testing Strategy](docs/testing-strategy.md)** - Testing philosophy and coverage requirements
+- **[Troubleshooting Guide](docs/troubleshooting.md)** - Common issues and solutions
+
+---
+
 *Architecture documentation following C4 Model by Simon Brown*
 *Last Updated: September 2025*
 *Next Review: Q1 2026*

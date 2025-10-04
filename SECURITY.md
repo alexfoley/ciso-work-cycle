@@ -122,8 +122,10 @@ As documented in [ARCHITECTURE.md](./ARCHITECTURE.md#security-architecture):
 
 ## Related Documentation
 
-- [ADR-004: Next.js Security Upgrade Decision](./docs/adr/ADR-004-nextjs-security-upgrade.md)
-- [Architecture Security Section](./ARCHITECTURE.md#security-architecture)
+- **[ADR-004: Next.js Security Upgrade Decision](./docs/adr/ADR-004-nextjs-security-upgrade.md)** - Security upgrade decision and process
+- **[Architecture Security Section](./ARCHITECTURE.md#security-architecture)** - Client-side threat model and dependencies
+- **[Contributing Guide](./CONTRIBUTING.md#security-contributions)** - Security contribution guidelines
+- **[Troubleshooting Guide](./docs/troubleshooting.md)** - Debugging and issue resolution
 
 ## References
 
