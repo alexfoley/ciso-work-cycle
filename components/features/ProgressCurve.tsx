@@ -70,19 +70,19 @@ const TOOLTIP_DIMENSIONS = {
 const LABEL_CONFIG = {
   base: {
     fontSize: 10,
-    padding: 4,
+    padding: 6,  // Increased padding for better spacing
     minDistance: 35,
     leaderLineLength: 20
   },
   sm: {
     fontSize: 11,
-    padding: 5,
+    padding: 8,  // Increased padding for better spacing
     minDistance: 40,
     leaderLineLength: 25
   },
   lg: {
     fontSize: 12,
-    padding: 6,
+    padding: 10,  // Increased padding for better spacing
     minDistance: 45,
     leaderLineLength: 30
   }
@@ -176,49 +176,104 @@ export function ProgressCurve() {
     const config = LABEL_CONFIG[breakpoint];
     const positions = new Map<string, LabelPosition>();
 
-    // Estimate label width (rough approximation: char count * fontSize * 0.6)
-    const estimateLabelWidth = (text: string) => text.length * config.fontSize * 0.6;
+    // Guard against empty projectPoints
+    if (!projectPoints || projectPoints.length === 0) {
+      return positions;
+    }
 
-    // Check if two rectangles overlap
-    const rectOverlaps = (r1: { x: number; y: number; width: number; height: number },
-                           r2: { x: number; y: number; width: number; height: number }) => {
-      return !(r1.x + r1.width < r2.x ||
-               r2.x + r2.width < r1.x ||
-               r1.y + r1.height < r2.y ||
-               r2.y + r2.height < r1.y);
+    // Wrap text into multiple lines for long labels
+    const wrapText = (text: string, maxCharsPerLine: number = 40): string[] => {
+      if (text.length <= maxCharsPerLine) return [text];
+
+      const words = text.split(' ');
+      const lines: string[] = [];
+      let currentLine = '';
+
+      for (const word of words) {
+        const testLine = currentLine ? `${currentLine} ${word}` : word;
+        if (testLine.length <= maxCharsPerLine) {
+          currentLine = testLine;
+        } else {
+          if (currentLine) lines.push(currentLine);
+          currentLine = word;
+        }
+      }
+      if (currentLine) lines.push(currentLine);
+
+      return lines;
     };
 
-    projectPoints.forEach(({ x, y, project }) => {
+    // Estimate label width (width of the longest line)
+    const estimateLabelWidth = (text: string) => {
+      const lines = wrapText(text);
+      const maxLineLength = Math.max(...lines.map(line => line.length));
+      return maxLineLength * config.fontSize * 0.65;
+    };
+
+    // Calculate label height based on number of lines
+    const calculateLabelHeight = (text: string) => {
+      const lines = wrapText(text);
+      const lineHeight = config.fontSize * 1.2; // 1.2 line height
+      return lines.length * lineHeight; // No padding - just the text height
+    };
+
+    // Check if two rectangles overlap (with minimal buffer for clearer separation)
+    const rectOverlaps = (r1: { x: number; y: number; width: number; height: number },
+                           r2: { x: number; y: number; width: number; height: number }) => {
+      const buffer = 1; // Minimal pixels of separation between labels
+      return !(r1.x + r1.width + buffer < r2.x ||
+               r2.x + r2.width + buffer < r1.x ||
+               r1.y + r1.height + buffer < r2.y ||
+               r2.y + r2.height + buffer < r1.y);
+    };
+
+    // Sort projects by position on curve to ensure predictable collision detection
+    const sortedProjectPoints = [...projectPoints].sort((a, b) => a.project.position - b.project.position);
+
+    sortedProjectPoints.forEach(({ x, y, project }) => {
       // Smart position priorities based on project location on curve
-      // Early curve (0-0.4): prefer left positions
-      // Peak/descent (0.4-0.7): prefer right/top/bottom
+      // Early curve (0-0.33): prefer left positions
+      // Top of curve (0.33-0.45): prefer diagonal upward positions (10:30 and 1:30)
+      // Descent (0.45-0.7): prefer right/top/bottom
       // Late curve (0.7-1.0): prefer right positions
-      const labelOffsets = project.position < 0.4
+      const labelOffsets = project.position < 0.33
         ? [
             // Early curve: prioritize left side positions
-            { angle: 180, anchor: 'end' as const },      // Left
-            { angle: -135, anchor: 'end' as const },     // Top-left
-            { angle: 135, anchor: 'end' as const },      // Bottom-left
-            { angle: -90, anchor: 'middle' as const },   // Top
-            { angle: 90, anchor: 'middle' as const },    // Bottom
-            { angle: 0, anchor: 'start' as const },      // Right
-            { angle: -45, anchor: 'start' as const },    // Top-right
-            { angle: 45, anchor: 'start' as const },     // Bottom-right
+            { angle: 180, anchor: 'end' as const },      // Left (9 o'clock)
+            { angle: -135, anchor: 'end' as const },     // Top-left (10:30)
+            { angle: 135, anchor: 'end' as const },      // Bottom-left (7:30)
+            { angle: -90, anchor: 'middle' as const },   // Top (12 o'clock)
+            { angle: 90, anchor: 'middle' as const },    // Bottom (6 o'clock)
+            { angle: 0, anchor: 'start' as const },      // Right (3 o'clock)
+            { angle: -45, anchor: 'start' as const },    // Top-right (1:30)
+            { angle: 45, anchor: 'start' as const },     // Bottom-right (4:30)
+          ]
+        : project.position < 0.45
+        ? [
+            // Top of curve: prioritize diagonal upward positions (avoid straight top for better spacing)
+            { angle: -135, anchor: 'end' as const },     // Top-left (10:30) - FIRST PRIORITY
+            { angle: -45, anchor: 'start' as const },    // Top-right (1:30)
+            { angle: -90, anchor: 'middle' as const },   // Top (12 o'clock)
+            { angle: 0, anchor: 'start' as const },      // Right (3 o'clock)
+            { angle: 180, anchor: 'end' as const },      // Left (9 o'clock)
+            { angle: 90, anchor: 'middle' as const },    // Bottom (6 o'clock)
+            { angle: 135, anchor: 'end' as const },      // Bottom-left (7:30)
+            { angle: 45, anchor: 'start' as const },     // Bottom-right (4:30)
           ]
         : [
             // Mid/late curve: prefer right side positions
-            { angle: 0, anchor: 'start' as const },      // Right
-            { angle: -45, anchor: 'start' as const },    // Top-right
-            { angle: 45, anchor: 'start' as const },     // Bottom-right
-            { angle: -90, anchor: 'middle' as const },   // Top
-            { angle: 90, anchor: 'middle' as const },    // Bottom
-            { angle: 180, anchor: 'end' as const },      // Left
-            { angle: -135, anchor: 'end' as const },     // Top-left
-            { angle: 135, anchor: 'end' as const },      // Bottom-left
+            { angle: 0, anchor: 'start' as const },      // Right (3 o'clock)
+            { angle: -45, anchor: 'start' as const },    // Top-right (1:30)
+            { angle: 45, anchor: 'start' as const },     // Bottom-right (4:30)
+            { angle: -90, anchor: 'middle' as const },   // Top (12 o'clock)
+            { angle: 90, anchor: 'middle' as const },    // Bottom (6 o'clock)
+            { angle: 180, anchor: 'end' as const },      // Left (9 o'clock)
+            { angle: -135, anchor: 'end' as const },     // Top-left (10:30)
+            { angle: 135, anchor: 'end' as const },      // Bottom-left (7:30)
           ];
 
       const labelWidth = estimateLabelWidth(project.name);
-      const labelHeight = config.fontSize + config.padding * 2;
+      const labelHeight = calculateLabelHeight(project.name);
       let bestPosition: LabelPosition | null = null;
 
       // Try each offset position until we find one without collisions
@@ -235,24 +290,26 @@ export function ProgressCurve() {
 
         const candidateRect = {
           x: rectX - config.padding,
-          y: labelY - labelHeight / 2 - config.padding,
+          y: labelY - labelHeight / 2 - 2, // Minimal vertical padding (2px)
           width: labelWidth + config.padding * 2,
-          height: labelHeight + config.padding * 2
+          height: labelHeight + 4 // Minimal vertical padding (2px top + 2px bottom)
         };
 
         // Check if this position collides with existing labels
         let hasCollision = false;
         for (const [existingName, existingPos] of Array.from(positions.entries())) {
-          const existingWidth = estimateLabelWidth(projects.find(p => p.name === existingName)!.name);
+          const existingProjectName = projects.find(p => p.name === existingName)!.name;
+          const existingWidth = estimateLabelWidth(existingProjectName);
+          const existingHeight = calculateLabelHeight(existingProjectName);
           let existingRectX = existingPos.x;
           if (existingPos.anchor === 'middle') existingRectX = existingPos.x - existingWidth / 2;
           else if (existingPos.anchor === 'end') existingRectX = existingPos.x - existingWidth;
 
           const existingRect = {
             x: existingRectX - config.padding,
-            y: existingPos.y - labelHeight / 2 - config.padding,
+            y: existingPos.y - existingHeight / 2 - 2, // Minimal vertical padding (2px)
             width: existingWidth + config.padding * 2,
-            height: labelHeight + config.padding * 2
+            height: existingHeight + 4 // Minimal vertical padding (2px top + 2px bottom)
           };
 
           if (rectOverlaps(candidateRect, existingRect)) {
@@ -280,16 +337,135 @@ export function ProgressCurve() {
         }
       }
 
-      // Fallback: if no good position found, place to the right with leader
+      // Fallback: if no good position found, try progressively further positions
       if (!bestPosition) {
-        bestPosition = {
-          x: x + config.leaderLineLength,
-          y: y,
-          anchor: 'start',
-          showLeader: true,
-          leaderEndX: x,
-          leaderEndY: y
-        };
+
+        // Try horizontal positions first (further right)
+        const horizontalDistances = [
+          config.leaderLineLength * 1.5,
+          config.leaderLineLength * 2,
+          config.leaderLineLength * 2.5,
+          config.leaderLineLength * 3
+        ];
+
+        for (const distance of horizontalDistances) {
+          const fallbackX = x + distance;
+          const fallbackRect = {
+            x: fallbackX - config.padding,
+            y: y - labelHeight / 2 - 2, // Minimal vertical padding (2px)
+            width: labelWidth + config.padding * 2,
+            height: labelHeight + 4 // Minimal vertical padding (2px top + 2px bottom)
+          };
+
+          let hasCollision = false;
+          for (const [existingName, existingPos] of Array.from(positions.entries())) {
+            const existingProjectName = projects.find(p => p.name === existingName)!.name;
+            const existingWidth = estimateLabelWidth(existingProjectName);
+            const existingHeight = calculateLabelHeight(existingProjectName);
+            let existingRectX = existingPos.x;
+            if (existingPos.anchor === 'middle') existingRectX = existingPos.x - existingWidth / 2;
+            else if (existingPos.anchor === 'end') existingRectX = existingPos.x - existingWidth;
+
+            const existingRect = {
+              x: existingRectX - config.padding,
+              y: existingPos.y - existingHeight / 2 - 2, // Minimal vertical padding (2px)
+              width: existingWidth + config.padding * 2,
+              height: existingHeight + 4 // Minimal vertical padding (2px top + 2px bottom)
+            };
+
+            if (rectOverlaps(fallbackRect, existingRect)) {
+              hasCollision = true;
+              break;
+            }
+          }
+
+          if (!hasCollision) {
+            bestPosition = {
+              x: fallbackX,
+              y: y,
+              anchor: 'start',
+              showLeader: true,
+              leaderEndX: x,
+              leaderEndY: y
+            };
+            break;
+          }
+        }
+
+        // Try vertical stacking (up and down) if horizontal didn't work
+        if (!bestPosition) {
+          const verticalOffsets = [
+            { offsetY: -config.leaderLineLength * 2, label: 'above' },
+            { offsetY: config.leaderLineLength * 2, label: 'below' },
+            { offsetY: -config.leaderLineLength * 3, label: 'far above' },
+            { offsetY: config.leaderLineLength * 3, label: 'far below' }
+          ];
+
+          for (const { offsetY, label: posLabel } of verticalOffsets) {
+            const fallbackX = x + config.leaderLineLength;
+            const fallbackY = y + offsetY;
+            const fallbackRect = {
+              x: fallbackX - config.padding,
+              y: fallbackY - labelHeight / 2 - 2, // Minimal vertical padding (2px)
+              width: labelWidth + config.padding * 2,
+              height: labelHeight + 4 // Minimal vertical padding (2px top + 2px bottom)
+            };
+
+            // Check bounds first
+            const inBounds = fallbackX >= margin.left &&
+                            fallbackX + labelWidth <= dimensions.width - margin.right &&
+                            fallbackY - labelHeight / 2 >= margin.top &&
+                            fallbackY + labelHeight / 2 <= dimensions.height - margin.bottom;
+
+            if (!inBounds) continue;
+
+            let hasCollision = false;
+            for (const [existingName, existingPos] of Array.from(positions.entries())) {
+              const existingProjectName = projects.find(p => p.name === existingName)!.name;
+              const existingWidth = estimateLabelWidth(existingProjectName);
+              const existingHeight = calculateLabelHeight(existingProjectName);
+              let existingRectX = existingPos.x;
+              if (existingPos.anchor === 'middle') existingRectX = existingPos.x - existingWidth / 2;
+              else if (existingPos.anchor === 'end') existingRectX = existingPos.x - existingWidth;
+
+              const existingRect = {
+                x: existingRectX - config.padding,
+                y: existingPos.y - existingHeight / 2 - 2, // Minimal vertical padding (2px)
+                width: existingWidth + config.padding * 2,
+                height: existingHeight + 4 // Minimal vertical padding (2px top + 2px bottom)
+              };
+
+              if (rectOverlaps(fallbackRect, existingRect)) {
+                hasCollision = true;
+                break;
+              }
+            }
+
+            if (!hasCollision) {
+              bestPosition = {
+                x: fallbackX,
+                y: fallbackY,
+                anchor: 'start',
+                showLeader: true,
+                leaderEndX: x,
+                leaderEndY: y
+              };
+              break;
+            }
+          }
+        }
+
+        // Ultimate fallback if still no position found (force position, may overlap)
+        if (!bestPosition) {
+          bestPosition = {
+            x: x + config.leaderLineLength * 3,
+            y: y,
+            anchor: 'start',
+            showLeader: true,
+            leaderEndX: x,
+            leaderEndY: y
+          };
+        }
       }
 
       positions.set(project.name, bestPosition);
@@ -571,10 +747,8 @@ export function ProgressCurve() {
                     y1={labelPos.leaderEndY}
                     x2={labelPos.x}
                     y2={labelPos.y}
-                    stroke="hsl(var(--muted-foreground))"
+                    stroke="black"
                     strokeWidth="1"
-                    strokeDasharray="2,2"
-                    opacity="0.5"
                   />
                 )}
 
@@ -583,7 +757,6 @@ export function ProgressCurve() {
                   x={labelPos.x}
                   y={labelPos.y}
                   textAnchor={labelPos.anchor}
-                  dominantBaseline="middle"
                   fontSize={config.fontSize}
                   className="font-medium"
                   stroke="white"
@@ -591,7 +764,37 @@ export function ProgressCurve() {
                   fill="white"
                   opacity="0.9"
                 >
-                  {project.name}
+                  {(() => {
+                    const lines = project.name.length > 40 ? (() => {
+                      const words = project.name.split(' ');
+                      const result: string[] = [];
+                      let currentLine = '';
+                      for (const word of words) {
+                        const testLine = currentLine ? `${currentLine} ${word}` : word;
+                        if (testLine.length <= 40) {
+                          currentLine = testLine;
+                        } else {
+                          if (currentLine) result.push(currentLine);
+                          currentLine = word;
+                        }
+                      }
+                      if (currentLine) result.push(currentLine);
+                      return result;
+                    })() : [project.name];
+
+                    const lineHeight = config.fontSize * 1.2;
+                    const totalHeight = lines.length * lineHeight;
+
+                    return lines.map((line, i) => (
+                      <tspan
+                        key={i}
+                        x={labelPos.x}
+                        y={labelPos.y - (totalHeight / 2) + (i * lineHeight) + (lineHeight / 2)}
+                      >
+                        {line}
+                      </tspan>
+                    ));
+                  })()}
                 </text>
 
                 {/* Actual label text */}
@@ -599,12 +802,41 @@ export function ProgressCurve() {
                   x={labelPos.x}
                   y={labelPos.y}
                   textAnchor={labelPos.anchor}
-                  dominantBaseline="middle"
                   fontSize={config.fontSize}
                   className="font-medium"
                   fill="hsl(var(--foreground))"
                 >
-                  {project.name}
+                  {(() => {
+                    const lines = project.name.length > 40 ? (() => {
+                      const words = project.name.split(' ');
+                      const result: string[] = [];
+                      let currentLine = '';
+                      for (const word of words) {
+                        const testLine = currentLine ? `${currentLine} ${word}` : word;
+                        if (testLine.length <= 40) {
+                          currentLine = testLine;
+                        } else {
+                          if (currentLine) result.push(currentLine);
+                          currentLine = word;
+                        }
+                      }
+                      if (currentLine) result.push(currentLine);
+                      return result;
+                    })() : [project.name];
+
+                    const lineHeight = config.fontSize * 1.2;
+                    const totalHeight = lines.length * lineHeight;
+
+                    return lines.map((line, i) => (
+                      <tspan
+                        key={i}
+                        x={labelPos.x}
+                        y={labelPos.y - (totalHeight / 2) + (i * lineHeight) + (lineHeight / 2)}
+                      >
+                        {line}
+                      </tspan>
+                    ));
+                  })()}
                 </text>
               </g>
             );
