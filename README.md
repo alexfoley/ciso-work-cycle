@@ -389,13 +389,15 @@ This project is licensed under the **GNU Affero General Public License v3.0** (A
 - ✅ Network use requires source code availability
 - ✅ Modifications must use same license
 
-See the [LICENSE](LICENSE) file for full legal text.
+See the [LICENSE](LICENSE) file for full legal text or [LICENSING.md](LICENSING.md) for plain-language explanation.
 
 **Why AGPL-3.0?**
 - Ensures source code transparency for security tools
 - Protects community contributions
 - Requires network service providers to share improvements
 - Aligns with open-source security principles
+
+**Need commercial licensing?** Contact licensing@forna.do - See [LICENSING.md](LICENSING.md) for details.
 
 ---
 
