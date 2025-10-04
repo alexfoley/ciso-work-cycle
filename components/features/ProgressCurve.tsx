@@ -188,19 +188,35 @@ export function ProgressCurve() {
                r2.y + r2.height < r1.y);
     };
 
-    // Possible label positions relative to point (angle in degrees)
-    const labelOffsets = [
-      { angle: 0, anchor: 'start' as const },      // Right
-      { angle: -45, anchor: 'start' as const },    // Top-right
-      { angle: 45, anchor: 'start' as const },     // Bottom-right
-      { angle: -90, anchor: 'middle' as const },   // Top
-      { angle: 90, anchor: 'middle' as const },    // Bottom
-      { angle: 180, anchor: 'end' as const },      // Left
-      { angle: -135, anchor: 'end' as const },     // Top-left
-      { angle: 135, anchor: 'end' as const },      // Bottom-left
-    ];
-
     projectPoints.forEach(({ x, y, project }) => {
+      // Smart position priorities based on project location on curve
+      // Early curve (0-0.4): prefer left positions
+      // Peak/descent (0.4-0.7): prefer right/top/bottom
+      // Late curve (0.7-1.0): prefer right positions
+      const labelOffsets = project.position < 0.4
+        ? [
+            // Early curve: prioritize left side positions
+            { angle: 180, anchor: 'end' as const },      // Left
+            { angle: -135, anchor: 'end' as const },     // Top-left
+            { angle: 135, anchor: 'end' as const },      // Bottom-left
+            { angle: -90, anchor: 'middle' as const },   // Top
+            { angle: 90, anchor: 'middle' as const },    // Bottom
+            { angle: 0, anchor: 'start' as const },      // Right
+            { angle: -45, anchor: 'start' as const },    // Top-right
+            { angle: 45, anchor: 'start' as const },     // Bottom-right
+          ]
+        : [
+            // Mid/late curve: prefer right side positions
+            { angle: 0, anchor: 'start' as const },      // Right
+            { angle: -45, anchor: 'start' as const },    // Top-right
+            { angle: 45, anchor: 'start' as const },     // Bottom-right
+            { angle: -90, anchor: 'middle' as const },   // Top
+            { angle: 90, anchor: 'middle' as const },    // Bottom
+            { angle: 180, anchor: 'end' as const },      // Left
+            { angle: -135, anchor: 'end' as const },     // Top-left
+            { angle: 135, anchor: 'end' as const },      // Bottom-left
+          ];
+
       const labelWidth = estimateLabelWidth(project.name);
       const labelHeight = config.fontSize + config.padding * 2;
       let bestPosition: LabelPosition | null = null;
