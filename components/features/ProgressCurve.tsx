@@ -16,9 +16,9 @@ const MARGIN = {
 // Text sizes based on viewport
 const TEXT_SIZES = {
   marker: {
-    base: 'text-[16px]',
-    sm: 'sm:text-[30px]',
-    lg: 'lg:text-[42px]',
+    base: 'text-[8px]',
+    sm: 'sm:text-[15px]',
+    lg: 'lg:text-[21px]',
   },
   axis: {
     base: 'text-[10px]',
