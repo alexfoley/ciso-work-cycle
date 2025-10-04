@@ -103,7 +103,7 @@ npm start
 ├── lib/
 │   ├── data.ts           # Project data and type definitions
 │   └── utils.ts          # Utility functions and helpers
-├── ARCHITECTURE.md        # C4 model architecture documentation
+├── ARCHITECTURE.md       # C4 model architecture documentation
 ├── CLAUDE.md             # AI assistant guidance
 ├── README.md             # This file
 └── SECURITY.md           # Security policy and vulnerability reporting
