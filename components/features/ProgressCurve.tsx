@@ -67,6 +67,27 @@ const TOOLTIP_DIMENSIONS = {
   }
 };
 
+const LABEL_CONFIG = {
+  base: {
+    fontSize: 10,
+    padding: 4,
+    minDistance: 35,
+    leaderLineLength: 20
+  },
+  sm: {
+    fontSize: 11,
+    padding: 5,
+    minDistance: 40,
+    leaderLineLength: 25
+  },
+  lg: {
+    fontSize: 12,
+    padding: 6,
+    minDistance: 45,
+    leaderLineLength: 30
+  }
+};
+
 const BREAKPOINTS = {
   base: { min: 0, max: 700 },
   sm: { min: 600, max: 1100 },
@@ -87,12 +108,22 @@ const DEFAULT_DIMENSIONS = {
   height: 800
 };
 
+interface LabelPosition {
+  x: number;
+  y: number;
+  anchor: 'start' | 'middle' | 'end';
+  showLeader: boolean;
+  leaderEndX: number;
+  leaderEndY: number;
+}
+
 export function ProgressCurve() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
   const [mounted, setMounted] = useState(false);
   const [dimensions, setDimensions] = useState(DEFAULT_DIMENSIONS);
   const [projectPoints, setProjectPoints] = useState<Array<{ x: number; y: number; project: Project }>>([]);
+  const [labelPositions, setLabelPositions] = useState<Map<string, LabelPosition>>(new Map());
   const [hoveredProject, setHoveredProject] = useState<Project | null>(null);
   const [breakpoint, setBreakpoint] = useState<'base' | 'sm' | 'lg'>('base');
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
@@ -140,6 +171,116 @@ export function ProgressCurve() {
       ${margin.left + plotWidth * 0.92},${margin.top + plotHeight * 0.73}
       ${margin.left + plotWidth},${margin.top + plotHeight * 0.7}
   `, [margin, plotWidth, plotHeight]);
+
+  const calculateSmartLabelPositions = useMemo(() => {
+    const config = LABEL_CONFIG[breakpoint];
+    const positions = new Map<string, LabelPosition>();
+
+    // Estimate label width (rough approximation: char count * fontSize * 0.6)
+    const estimateLabelWidth = (text: string) => text.length * config.fontSize * 0.6;
+
+    // Check if two rectangles overlap
+    const rectOverlaps = (r1: { x: number; y: number; width: number; height: number },
+                           r2: { x: number; y: number; width: number; height: number }) => {
+      return !(r1.x + r1.width < r2.x ||
+               r2.x + r2.width < r1.x ||
+               r1.y + r1.height < r2.y ||
+               r2.y + r2.height < r1.y);
+    };
+
+    // Possible label positions relative to point (angle in degrees)
+    const labelOffsets = [
+      { angle: 0, anchor: 'start' as const },      // Right
+      { angle: -45, anchor: 'start' as const },    // Top-right
+      { angle: 45, anchor: 'start' as const },     // Bottom-right
+      { angle: -90, anchor: 'middle' as const },   // Top
+      { angle: 90, anchor: 'middle' as const },    // Bottom
+      { angle: 180, anchor: 'end' as const },      // Left
+      { angle: -135, anchor: 'end' as const },     // Top-left
+      { angle: 135, anchor: 'end' as const },      // Bottom-left
+    ];
+
+    projectPoints.forEach(({ x, y, project }) => {
+      const labelWidth = estimateLabelWidth(project.name);
+      const labelHeight = config.fontSize + config.padding * 2;
+      let bestPosition: LabelPosition | null = null;
+
+      // Try each offset position until we find one without collisions
+      for (const { angle, anchor } of labelOffsets) {
+        const radians = (angle * Math.PI) / 180;
+        const distance = config.leaderLineLength;
+        const labelX = x + Math.cos(radians) * distance;
+        const labelY = y + Math.sin(radians) * distance;
+
+        // Calculate label bounding box based on anchor
+        let rectX = labelX;
+        if (anchor === 'middle') rectX = labelX - labelWidth / 2;
+        else if (anchor === 'end') rectX = labelX - labelWidth;
+
+        const candidateRect = {
+          x: rectX - config.padding,
+          y: labelY - labelHeight / 2 - config.padding,
+          width: labelWidth + config.padding * 2,
+          height: labelHeight + config.padding * 2
+        };
+
+        // Check if this position collides with existing labels
+        let hasCollision = false;
+        for (const [existingName, existingPos] of Array.from(positions.entries())) {
+          const existingWidth = estimateLabelWidth(projects.find(p => p.name === existingName)!.name);
+          let existingRectX = existingPos.x;
+          if (existingPos.anchor === 'middle') existingRectX = existingPos.x - existingWidth / 2;
+          else if (existingPos.anchor === 'end') existingRectX = existingPos.x - existingWidth;
+
+          const existingRect = {
+            x: existingRectX - config.padding,
+            y: existingPos.y - labelHeight / 2 - config.padding,
+            width: existingWidth + config.padding * 2,
+            height: labelHeight + config.padding * 2
+          };
+
+          if (rectOverlaps(candidateRect, existingRect)) {
+            hasCollision = true;
+            break;
+          }
+        }
+
+        // Also check if label is within bounds
+        const inBounds = rectX >= margin.left &&
+                        rectX + labelWidth <= dimensions.width - margin.right &&
+                        labelY - labelHeight / 2 >= margin.top &&
+                        labelY + labelHeight / 2 <= dimensions.height - margin.bottom;
+
+        if (!hasCollision && inBounds) {
+          bestPosition = {
+            x: labelX,
+            y: labelY,
+            anchor,
+            showLeader: Math.abs(angle) > 10, // Show leader line if not directly to the right
+            leaderEndX: x,
+            leaderEndY: y
+          };
+          break;
+        }
+      }
+
+      // Fallback: if no good position found, place to the right with leader
+      if (!bestPosition) {
+        bestPosition = {
+          x: x + config.leaderLineLength,
+          y: y,
+          anchor: 'start',
+          showLeader: true,
+          leaderEndX: x,
+          leaderEndY: y
+        };
+      }
+
+      positions.set(project.name, bestPosition);
+    });
+
+    return positions;
+  }, [projectPoints, breakpoint, dimensions, margin, projects]);
 
   const gridLines = useMemo(() => {
     const lines = [];
@@ -220,6 +361,11 @@ export function ProgressCurve() {
     }
   }, [pathString]);
 
+  // Update label positions when smart positions are recalculated
+  useEffect(() => {
+    setLabelPositions(calculateSmartLabelPositions);
+  }, [calculateSmartLabelPositions]);
+
   const getWrappedText = (text: string, maxWidth: number, fontSize: number) => {
     const words = text.split(' ');
     const lines: string[] = [];
@@ -272,8 +418,7 @@ export function ProgressCurve() {
 
   const getLegendLayout = () => {
     const entries = Object.entries(timelineMarkers);
-    const totalItems = entries.length;
-    
+
     const layout = {
       base: {
         columns: 2,
@@ -394,6 +539,61 @@ export function ProgressCurve() {
             </g>
           ))}
 
+          {/* Project Labels with Smart Positioning */}
+          {projectPoints.map(({ project }) => {
+            const labelPos = labelPositions.get(project.name);
+            if (!labelPos) return null;
+
+            const config = LABEL_CONFIG[breakpoint];
+
+            return (
+              <g key={`label-${project.name}`}>
+                {/* Leader line if label is offset */}
+                {labelPos.showLeader && (
+                  <line
+                    x1={labelPos.leaderEndX}
+                    y1={labelPos.leaderEndY}
+                    x2={labelPos.x}
+                    y2={labelPos.y}
+                    stroke="hsl(var(--muted-foreground))"
+                    strokeWidth="1"
+                    strokeDasharray="2,2"
+                    opacity="0.5"
+                  />
+                )}
+
+                {/* Label background for better readability */}
+                <text
+                  x={labelPos.x}
+                  y={labelPos.y}
+                  textAnchor={labelPos.anchor}
+                  dominantBaseline="middle"
+                  fontSize={config.fontSize}
+                  className="font-medium"
+                  stroke="white"
+                  strokeWidth="3"
+                  fill="white"
+                  opacity="0.9"
+                >
+                  {project.name}
+                </text>
+
+                {/* Actual label text */}
+                <text
+                  x={labelPos.x}
+                  y={labelPos.y}
+                  textAnchor={labelPos.anchor}
+                  dominantBaseline="middle"
+                  fontSize={config.fontSize}
+                  className="font-medium"
+                  fill="hsl(var(--foreground))"
+                >
+                  {project.name}
+                </text>
+              </g>
+            );
+          })}
+
           <g>
             <text
               x={margin.left}
@@ -402,7 +602,7 @@ export function ProgressCurve() {
             >
               Next plateau:
             </text>
-            {getLegendLayout().map(({ symbol, label, x, y }, index) => (
+            {getLegendLayout().map(({ symbol, label, x, y }) => (
               <g key={label} transform={`translate(${x}, ${y})`}>
                 <text
                   className={`${TEXT_SIZES.legendMarker[breakpoint]} font-bold`}
