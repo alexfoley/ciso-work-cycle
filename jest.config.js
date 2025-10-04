@@ -24,6 +24,7 @@ const customJestConfig = {
     'lib/**/*.{js,jsx,ts,tsx}',
     'hooks/**/*.{js,jsx,ts,tsx}',
     'app/**/*.{js,jsx,ts,tsx}',
+    'scripts/**/*.{js,jsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
     '!components/ui/**',  // Exclude copied Shadcn UI components (~4000 lines)
