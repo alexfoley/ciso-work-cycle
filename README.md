@@ -56,8 +56,10 @@ The CISO Work Cycle transforms complex project portfolios into intuitive visual 
 
 ### Documentation
 - **[Architecture Documentation](ARCHITECTURE.md)** - C4 model architecture with diagrams
+- **[Contributing Guide](CONTRIBUTING.md)** - Development workflow and code standards
 - **[Executive Data Management Guide](docs/data-management.md)** - CSV-based workflow for non-technical users
-- **[Testing Strategy](docs/TESTING-STRATEGY.md)** - Executive-focused testing approach
+- **[Testing Strategy](docs/testing-strategy.md)** - Executive-focused testing approach
+- **[Troubleshooting Guide](docs/troubleshooting.md)** - Common issues and solutions
 - **[Security Policy](SECURITY.md)** - Vulnerability disclosure and security practices
 - **[Architecture Decision Records](docs/adr/)** - Technical decision documentation
 
@@ -252,60 +254,36 @@ Directly edit `lib/data.ts`:
 
 ## 🔧 Troubleshooting
 
-### Common Issues
+Encountering issues? Check our comprehensive [Troubleshooting Guide](docs/troubleshooting.md) for detailed solutions.
 
-#### Development Server Won't Start
+### Quick Fixes
 
-**Error**: `Port 3000 is already in use`
-
+**Port 3000 in use:**
 ```bash
-# Find and kill process on port 3000
-lsof -ti:3000 | xargs kill -9
-# Or use a different port
-npm run dev -- -p 3001
+lsof -ti:3000 | xargs kill -9  # Kill process on port 3000
+npm run dev -- -p 3001          # Or use different port
 ```
 
-#### CSV Update Fails
+**CSV validation errors:**
+- Position: Use decimals (0.3) not percentages (30%)
+- Category: Use exact names: "IS Projects", "Unplanned Work", etc.
+- See [Data Management Guide](docs/data-management.md#troubleshooting-common-issues)
 
-**Error**: `Position must be between 0.0 and 1.0`
-
-- Check that position values are decimals (e.g., 0.3) not percentages (30%)
-- Ensure all required fields are filled
-- Use exact category names: "Unplanned Work", "IS Projects", "IT/Business Projects", "Business-as-Usual"
-- Use exact timeline values: "next month", "next quarter", "next half", "next year", "on hold"
-
-See [docs/data-management.md#troubleshooting](docs/data-management.md#troubleshooting-common-issues) for complete troubleshooting guide.
-
-#### Build Errors
-
-**Error**: `Module not found` or `Type errors`
-
+**Build failures:**
 ```bash
-# Clear Next.js cache and rebuild
-rm -rf .next node_modules
-npm install
-npm run build
+rm -rf .next node_modules  # Clear caches
+npm install                # Reinstall dependencies
+npm run build              # Rebuild
 ```
 
-#### Tests Failing
-
-```bash
-# Run tests with verbose output
-npm test -- --verbose
-
-# Update test snapshots if components changed intentionally
-npm test -- -u
-
-# Check coverage
-npm run test:coverage
-```
+📖 **Complete Guide**: [docs/troubleshooting.md](docs/troubleshooting.md) covers 30+ common issues with step-by-step solutions.
 
 ### Getting Help
 
-1. **Check Documentation**: Review [ARCHITECTURE.md](ARCHITECTURE.md) and [docs/](docs/) folder
-2. **Search Issues**: Check [GitHub Issues](https://github.com/alexfoley/ciso-work-cycle/issues) for similar problems
-3. **Security Issues**: Report to security@example.com (see [SECURITY.md](SECURITY.md))
-4. **Feature Requests**: Open an issue with the "enhancement" label
+1. **Documentation**: [ARCHITECTURE.md](ARCHITECTURE.md), [CONTRIBUTING.md](CONTRIBUTING.md), [docs/](docs/)
+2. **Search Issues**: [GitHub Issues](https://github.com/alexfoley/ciso-work-cycle/issues)
+3. **Report Bugs**: Use [bug report template](.github/ISSUE_TEMPLATE/bug_report.md)
+4. **Security Issues**: See [SECURITY.md](SECURITY.md) (DO NOT create public issues)
 
 ## 🧪 Testing
 
@@ -336,39 +314,37 @@ We focus on **executive confidence over arbitrary coverage metrics**. Tests vali
 - Responsive behavior across presentation displays
 - Interactive features (tooltips, hover states)
 
-📖 **Full Testing Strategy**: See [docs/TESTING-STRATEGY.md](docs/TESTING-STRATEGY.md)
+📖 **Full Testing Strategy**: See [docs/testing-strategy.md](docs/testing-strategy.md)
 
 ## 🤝 Contributing
 
-We welcome contributions from the security community!
+We welcome contributions from the security community! See our [Contributing Guide](CONTRIBUTING.md) for complete details.
 
-### How to Contribute
+### Quick Start
 
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Make your changes** following our code style
-4. **Add tests** for new functionality
-5. **Ensure all tests pass** (`npm test`)
-6. **Commit with clear messages** (`git commit -m 'Add amazing feature'`)
-7. **Push to your fork** (`git push origin feature/amazing-feature`)
-8. **Open a Pull Request**
+1. **Fork** the repository
+2. **Clone** and set up: `npm install`
+3. **Branch**: `git checkout -b feature/amazing-feature`
+4. **Develop** following [code standards](CONTRIBUTING.md#coding-standards)
+5. **Test**: `npm test` (85%+ coverage required)
+6. **Commit**: Use [Conventional Commits](CONTRIBUTING.md#commit-message-guidelines)
+7. **Push** and create a [Pull Request](CONTRIBUTING.md#pull-request-process)
 
 ### Code Standards
 
-- **TypeScript**: Use strict typing, no `any` types
-- **Testing**: Maintain 85%+ coverage on core components
-- **Documentation**: Update README and relevant docs
-- **SPDX Headers**: Include `SPDX-License-Identifier: AGPL-3.0-or-later` in new files
+- **TypeScript**: Strict typing, no `any` types
+- **Testing**: 85%+ coverage for core components
+- **Formatting**: Follow ESLint rules (`npm run lint`)
+- **Documentation**: Update relevant docs
+- **License Headers**: Include SPDX identifiers in new files
 
-### Development Commands
+📖 **Full Guide**: [CONTRIBUTING.md](CONTRIBUTING.md) covers development setup, testing requirements, PR process, and more.
 
-```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm test             # Run test suite
-npm run lint         # Check code style
-npm run update-data  # Validate and convert CSV data
-```
+### Issue Templates
+
+- **Bug Reports**: [.github/ISSUE_TEMPLATE/bug_report.md](.github/ISSUE_TEMPLATE/bug_report.md)
+- **Feature Requests**: [.github/ISSUE_TEMPLATE/feature_request.md](.github/ISSUE_TEMPLATE/feature_request.md)
+- **Pull Requests**: [.github/pull_request_template.md](.github/pull_request_template.md)
 
 ## 🔒 Security
 

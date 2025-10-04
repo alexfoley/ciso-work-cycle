@@ -141,4 +141,13 @@ Think of position as "maturity on the curve":
 
 ---
 
+## Related Documentation
+
+- **[Troubleshooting Guide](troubleshooting.md)** - Comprehensive solutions for development and runtime issues
+- **[Contributing Guide](../CONTRIBUTING.md)** - Developer workflow and code standards
+- **[Architecture Documentation](../ARCHITECTURE.md)** - Technical architecture and design decisions
+- **[Testing Strategy](testing-strategy.md)** - Testing approach and coverage requirements
+
+---
+
 *This guide transforms complex project portfolio management into a simple, executive-friendly workflow. No coding knowledge required.*

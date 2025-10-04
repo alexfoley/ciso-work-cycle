@@ -403,7 +403,8 @@ npm audit
 - **Documentation**: [ARCHITECTURE.md](ARCHITECTURE.md) for technical details
 - **ADRs**: [docs/adr/](docs/adr/) for architecture decisions
 - **Data Management**: [docs/data-management.md](docs/data-management.md)
-- **Testing Strategy**: [docs/TESTING-STRATEGY.md](docs/TESTING-STRATEGY.md)
+- **Testing Strategy**: [docs/testing-strategy.md](docs/testing-strategy.md)
+- **Troubleshooting**: [docs/troubleshooting.md](docs/troubleshooting.md)
 
 ### Ask Questions
 
