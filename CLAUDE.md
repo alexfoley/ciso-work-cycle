@@ -107,6 +107,40 @@ To add projects, edit `lib/data.ts` and add objects to the projects array with r
 
 The application uses a design system with Apple-level aesthetics and follows responsive design patterns with mobile-first approach.
 
+## Design System
+
+### Color System
+
+**Risk Level Colors:**
+- High: `#fee2e2` (background), `#991b1b` (text)
+- Medium: `#fef3c7` (background), `#92400e` (text)
+- Low: `#dcfce7` (background), `#166534` (text)
+
+**Complexity Level Colors:**
+- High: `#fee2e2` (background), `#991b1b` (text)
+- Medium: `#fef3c7` (background), `#92400e` (text)
+- Low: `#dcfce7` (background), `#166534` (text)
+
+### Spacing System
+
+Following an 8px grid system:
+- **Base padding**: 10px
+- **Small breakpoint padding**: 12px
+- **Large breakpoint padding**: 15px
+- **General spacing**: Use multiples of 4px or 8px (4px, 8px, 16px, 24px, 32px, 48px)
+
+### Typography
+
+- **Tooltips**: Bold titles (`font-bold`), medium category text (`font-medium`)
+- **Badges**: Semibold text (`font-semibold`)
+- **Responsive sizing**: Defined in component-specific dimension configs (e.g., `TOOLTIP_DIMENSIONS`)
+
+### Component Patterns
+
+- **Border radius**: 8-10px for modern rounded corners
+- **Shadows**: Subtle drop shadows using `rgba(0, 0, 0, 0.1)` with `blur(4px)`
+- **SVG text positioning**: Use `dominantBaseline` attribute for consistent alignment
+
 ## Linear Issue Integration
 - This project uses Linear for task management (issues like FOR-129, FOR-123, etc.)
 - When committing changes that address Linear issues, use magic words in commit messages
