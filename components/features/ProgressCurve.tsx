@@ -871,21 +871,35 @@ export function ProgressCurve() {
           </g>
 
           {hoveredProject && (
-            <g 
+            <g
               transform={`translate(${tooltipPosition.x}, ${tooltipPosition.y})`}
               className="transition-transform duration-150 ease-in-out"
               pointerEvents="none"
             >
+              {/* Drop shadow */}
+              <rect
+                x={2}
+                y={2}
+                width={TOOLTIP_DIMENSIONS[breakpoint].width}
+                height={TOOLTIP_DIMENSIONS[breakpoint].height}
+                fill="rgba(0, 0, 0, 0.1)"
+                rx="8"
+                filter="blur(4px)"
+              />
+
+              {/* Main tooltip background */}
               <rect
                 x={0}
                 y={0}
                 width={TOOLTIP_DIMENSIONS[breakpoint].width}
                 height={TOOLTIP_DIMENSIONS[breakpoint].height}
                 fill="white"
-                stroke="hsl(var(--primary))"
+                stroke="hsl(var(--border))"
                 strokeWidth="1"
-                rx="4"
+                rx="8"
               />
+
+              {/* Title */}
               {getWrappedText(
                 hoveredProject.name,
                 TOOLTIP_DIMENSIONS[breakpoint].width - TOOLTIP_DIMENSIONS[breakpoint].padding * 2,
@@ -894,13 +908,17 @@ export function ProgressCurve() {
                 <text
                   key={`title-${i}`}
                   x={TOOLTIP_DIMENSIONS[breakpoint].padding}
-                  y={TOOLTIP_DIMENSIONS[breakpoint].padding + (i * TOOLTIP_DIMENSIONS[breakpoint].titleSize * 1.2)}
-                  className="font-semibold tracking-tight"
+                  y={TOOLTIP_DIMENSIONS[breakpoint].padding + (i * TOOLTIP_DIMENSIONS[breakpoint].titleSize * 1.3)}
+                  dominantBaseline="hanging"
+                  className="font-bold tracking-tight"
                   style={{ fontSize: TOOLTIP_DIMENSIONS[breakpoint].titleSize }}
+                  fill="hsl(var(--foreground))"
                 >
                   {line}
                 </text>
               ))}
+
+              {/* Category */}
               {getWrappedText(
                 hoveredProject.category,
                 TOOLTIP_DIMENSIONS[breakpoint].width - TOOLTIP_DIMENSIONS[breakpoint].padding * 2,
@@ -910,21 +928,58 @@ export function ProgressCurve() {
                   key={`category-${i}`}
                   x={TOOLTIP_DIMENSIONS[breakpoint].padding}
                   y={TOOLTIP_DIMENSIONS[breakpoint].padding +
-                     (getWrappedText(hoveredProject.name, TOOLTIP_DIMENSIONS[breakpoint].width - TOOLTIP_DIMENSIONS[breakpoint].padding * 2, TOOLTIP_DIMENSIONS[breakpoint].titleSize).length * TOOLTIP_DIMENSIONS[breakpoint].titleSize * 1.2) +
+                     (getWrappedText(hoveredProject.name, TOOLTIP_DIMENSIONS[breakpoint].width - TOOLTIP_DIMENSIONS[breakpoint].padding * 2, TOOLTIP_DIMENSIONS[breakpoint].titleSize).length * TOOLTIP_DIMENSIONS[breakpoint].titleSize * 1.3) +
+                     6 +
                      (i * TOOLTIP_DIMENSIONS[breakpoint].categorySize * 1.2)}
-                  className="text-muted-foreground"
+                  dominantBaseline="hanging"
+                  className="font-medium"
                   style={{ fontSize: TOOLTIP_DIMENSIONS[breakpoint].categorySize }}
+                  fill="hsl(var(--muted-foreground))"
                 >
                   {line}
                 </text>
               ))}
-              <text
+
+              {/* Risk badge */}
+              <rect
                 x={TOOLTIP_DIMENSIONS[breakpoint].padding}
-                y={TOOLTIP_DIMENSIONS[breakpoint].height - TOOLTIP_DIMENSIONS[breakpoint].padding}
-                className="uppercase tracking-wider text-muted-foreground"
+                y={TOOLTIP_DIMENSIONS[breakpoint].height - TOOLTIP_DIMENSIONS[breakpoint].padding - 20}
+                width={50}
+                height={20}
+                rx="10"
+                fill={hoveredProject.risk === 'H' ? '#fee2e2' : hoveredProject.risk === 'M' ? '#fef3c7' : '#dcfce7'}
+              />
+              <text
+                x={TOOLTIP_DIMENSIONS[breakpoint].padding + 25}
+                y={TOOLTIP_DIMENSIONS[breakpoint].height - TOOLTIP_DIMENSIONS[breakpoint].padding - 10}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="font-semibold"
                 style={{ fontSize: TOOLTIP_DIMENSIONS[breakpoint].metaSize }}
+                fill={hoveredProject.risk === 'H' ? '#991b1b' : hoveredProject.risk === 'M' ? '#92400e' : '#166534'}
               >
-                RISK: {hoveredProject.risk} / COMPLEXITY: {hoveredProject.complexity}
+                Risk: {hoveredProject.risk}
+              </text>
+
+              {/* Complexity badge */}
+              <rect
+                x={TOOLTIP_DIMENSIONS[breakpoint].padding + 56}
+                y={TOOLTIP_DIMENSIONS[breakpoint].height - TOOLTIP_DIMENSIONS[breakpoint].padding - 20}
+                width={70}
+                height={20}
+                rx="10"
+                fill={hoveredProject.complexity === 'H' ? '#fee2e2' : hoveredProject.complexity === 'M' ? '#fef3c7' : '#dcfce7'}
+              />
+              <text
+                x={TOOLTIP_DIMENSIONS[breakpoint].padding + 91}
+                y={TOOLTIP_DIMENSIONS[breakpoint].height - TOOLTIP_DIMENSIONS[breakpoint].padding - 10}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="font-semibold"
+                style={{ fontSize: TOOLTIP_DIMENSIONS[breakpoint].metaSize }}
+                fill={hoveredProject.complexity === 'H' ? '#991b1b' : hoveredProject.complexity === 'M' ? '#92400e' : '#166534'}
+              >
+                Complex: {hoveredProject.complexity}
               </text>
             </g>
           )}
