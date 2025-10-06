@@ -33,3 +33,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude Code settings
+/.claude
+
+# SWC compiler cache
+/.swc
+
+# Dependency licenses (generated file with local paths)
+dependency-licenses.json
