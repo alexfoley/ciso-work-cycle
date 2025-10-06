@@ -155,33 +155,33 @@ npm run build
 ## 📁 Project Structure
 
 ```
-├── app/                    # Next.js App Router pages
-│   ├── globals.css        # Global styles and CSS variables
-│   ├── layout.tsx         # Root layout component
-│   └── page.tsx           # Main dashboard page
+├── app/                       # Next.js App Router pages
+│   ├── globals.css            # Global styles and CSS variables
+│   ├── layout.tsx             # Root layout component
+│   └── page.tsx               # Main dashboard page
 ├── components/
-│   ├── features/          # Core business logic components
+│   ├── features/              # Core business logic components
 │   │   └── ProgressCurve.tsx  # Main visualization component (95% tested)
-│   ├── layout/            # Layout components
-│   │   ├── Header.tsx     # Application header (100% tested)
-│   │   └── Sidebar.tsx    # Project category sidebars (100% tested)
-│   └── ui/                # Shadcn/UI component library
+│   ├── layout/                # Layout components
+│   │   ├── Header.tsx         # Application header (100% tested)
+│   │   └── Sidebar.tsx        # Project category sidebars (100% tested)
+│   └── ui/                    # Shadcn/UI component library
 ├── docs/
-│   ├── adr/               # Architecture Decision Records
-│   ├── data-management.md # Executive data update guide
-│   └── TESTING-STRATEGY.md # Testing philosophy and approach
-├── hooks/                 # Custom React hooks
+│   ├── adr/                   # Architecture Decision Records
+│   ├── data-management.md     # Executive data update guide
+│   └── TESTING-STRATEGY.md    # Testing philosophy and approach
+├── hooks/                     # Custom React hooks
 ├── lib/
-│   ├── data.ts           # Project data and type definitions
-│   └── utils.ts          # Utility functions and helpers
+│   ├── data.ts                # Project data and type definitions
+│   └── utils.ts               # Utility functions and helpers
 ├── scripts/
-│   └── update-data.js    # CSV-to-TypeScript data generator
-├── __tests__/            # Comprehensive test suite
-├── ARCHITECTURE.md       # C4 model architecture documentation
-├── CLAUDE.md             # AI assistant guidance
-├── LICENSE               # AGPL-3.0 license
-├── README.md             # This file
-└── SECURITY.md           # Security policy and vulnerability reporting
+│   └── update-data.js         # CSV-to-TypeScript data generator
+├── __tests__/                 # Comprehensive test suite
+├── ARCHITECTURE.md            # C4 model architecture documentation
+├── CLAUDE.md                  # AI assistant guidance
+├── LICENSE                    # AGPL-3.0 license
+├── README.md                  # This file
+└── SECURITY.md                # Security policy and vulnerability reporting
 ```
 
 ## 📊 Data Management
@@ -362,7 +362,7 @@ Security is paramount for a CISO tool. We take security seriously:
 
 Instead, please report security issues by following our [Security Policy](SECURITY.md):
 
-1. Email: `security@example.com` (or create a private security advisory on GitHub)
+1. Email: `security@forna.do` (or create a private security advisory on GitHub)
 2. Include detailed description and reproduction steps
 3. We'll acknowledge within 48 hours
 4. We'll work with you on remediation
