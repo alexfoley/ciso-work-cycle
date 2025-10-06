@@ -132,7 +132,7 @@ npm run build
 - **Next.js 14.2.33**: React-based framework with App Router and security patches
 - **TypeScript 5.3.3**: Full type safety ensuring robust, maintainable code
 - **Tailwind CSS 3.4**: Utility-first styling for consistent, responsive design
-- **Shadcn/UI**: Premium component library for professional aesthetics
+- **Custom Components**: Purpose-built visualization components for executive presentations
 
 ### **Advanced Visualization**
 - **Custom SVG Engine**: Hand-crafted curve mathematics for precise project positioning
@@ -162,10 +162,9 @@ npm run build
 ├── components/
 │   ├── features/              # Core business logic components
 │   │   └── ProgressCurve.tsx  # Main visualization component (95% tested)
-│   ├── layout/                # Layout components
-│   │   ├── Header.tsx         # Application header (100% tested)
-│   │   └── Sidebar.tsx        # Project category sidebars (100% tested)
-│   └── ui/                    # Shadcn/UI component library
+│   └── layout/                # Layout components
+│       ├── Header.tsx         # Application header (100% tested)
+│       └── Sidebar.tsx        # Project category sidebars (100% tested)
 ├── docs/
 │   ├── adr/                   # Architecture Decision Records
 │   ├── data-management.md     # Executive data update guide

@@ -79,7 +79,7 @@ Each project has:
 ### Tech Stack
 
 - **Frontend**: Next.js 13.5 + TypeScript + Tailwind CSS
-- **UI Library**: Shadcn/UI with Radix UI primitives
+- **Components**: Custom React components (ProgressCurve, Header, Sidebar)
 - **Visualization**: Custom SVG rendering with responsive mathematics
 - **Styling**: Tailwind with 8px spacing grid system
 

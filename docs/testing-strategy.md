@@ -66,12 +66,12 @@ Our coverage targets:
 - **ProgressCurve.tsx**: 85%+ (achieved 95%) ✅
 - **Data pipeline**: Focus on validation logic (achieved 46% overall, 100% on core functions) ✅
 - **Layout components**: 70%+ (achieved 100%) ✅
-- **Global project**: Not a primary target - varies based on untested UI components and scripts
+- **Global project**: Not a primary target - varies based on utility scripts
 
 **What we don't test exhaustively**:
-- Copied UI components (Shadcn/UI primitives) - Already tested by their maintainers
 - File I/O and logging in scripts - Tested manually, low risk
 - Edge cases that don't affect executive use cases
+- Third-party utilities (Tailwind, Next.js) - Tested by their maintainers
 
 ### Real-World Scenarios
 

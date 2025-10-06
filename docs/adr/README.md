@@ -11,6 +11,7 @@ This directory contains Architecture Decision Records (ADRs) following Michael N
 | [ADR-003](./ADR-003-data-management-strategy.md) | Data Management Strategy | Accepted | 2025-09-30 |
 | [ADR-004](./ADR-004-nextjs-security-upgrade.md) | Next.js Security Upgrade Decision | Accepted | 2025-09-30 |
 | [ADR-005](./ADR-005-design-system-architecture.md) | Design System Architecture for Executive Credibility | Accepted | 2025-09-30 |
+| [ADR-006](./ADR-006-component-library-simplification.md) | Component Library Simplification | Accepted | 2025-10-06 |
 
 ## Writing Guidelines
 

@@ -105,8 +105,7 @@ graph TB
     end
 
     subgraph "Design System"
-        UI["UI Components<br/>【Module: components/ui】<br/>Shadcn/Radix primitives"]
-        Styles["Global Styles<br/>【Module: globals.css】<br/>Design tokens<br/>CSS variables"]
+        Styles["Global Styles<br/>【Module: globals.css】<br/>Design tokens<br/>CSS variables<br/>Tailwind utilities"]
     end
 
     Page --> Header
@@ -115,8 +114,9 @@ graph TB
     Curve --> Tooltip
     Curve --> Legend
     Curve --> ProjectData
-    Curve --> UI
-    UI --> Styles
+    Curve --> Styles
+    Header --> Styles
+    Sidebar --> Styles
     ProjectData --> Utils
 ```
 
