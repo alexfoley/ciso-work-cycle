@@ -197,8 +197,7 @@ npm run lint
 ```
 components/
 ├── features/      # Core business logic components
-├── layout/        # Layout components (Header, Sidebar)
-└── ui/           # Reusable UI primitives (Shadcn/UI)
+└── layout/        # Layout components (Header, Sidebar)
 
 lib/
 ├── data.ts       # Project data and types

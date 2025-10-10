@@ -105,8 +105,7 @@ graph TB
     end
 
     subgraph "Design System"
-        UI["UI Components<br/>【Module: components/ui】<br/>Shadcn/Radix primitives"]
-        Styles["Global Styles<br/>【Module: globals.css】<br/>Design tokens<br/>CSS variables"]
+        Styles["Global Styles<br/>【Module: globals.css】<br/>Design tokens<br/>CSS variables<br/>Tailwind utilities"]
     end
 
     Page --> Header
@@ -115,8 +114,9 @@ graph TB
     Curve --> Tooltip
     Curve --> Legend
     Curve --> ProjectData
-    Curve --> UI
-    UI --> Styles
+    Curve --> Styles
+    Header --> Styles
+    Sidebar --> Styles
     ProjectData --> Utils
 ```
 
@@ -223,11 +223,14 @@ point = path.getPointAtLength(pathLength * position)
 - Resolution support: 4K displays (3840×2160)
 - Print quality: Vector graphics for PDF export
 
-**Accessibility Compliance (WCAG 2.1 AA):**
-- Color contrast ratios: 4.5:1 minimum
-- Keyboard navigation: Full support
-- Screen reader: ARIA labels on all interactive elements
-- Focus indicators: Visible and high contrast
+**Accessibility Status:**
+- ✅ Color contrast ratios: 4.5:1 minimum (verified for text and badges)
+- ✅ Responsive design: Works across screen sizes
+- ⚠️ Keyboard navigation: Todo
+- ⚠️ Screen reader support: Todo
+- ⚠️ ARIA labels: Todo
+
+**Note**: We're actively working toward full WCAG 2.1 AA compliance. Current visual accessibility is good, but functional accessibility for screen readers and keyboard-only users needs enhancement.
 
 ### Data Security Architecture
 

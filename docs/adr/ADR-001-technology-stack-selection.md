@@ -25,7 +25,7 @@ Key constraints:
 - **Framework**: Next.js 14.2.33 with App Router
 - **Language**: TypeScript 5.3.3 with strict type checking
 - **Styling**: Tailwind CSS 3.3.3 with design system
-- **UI Library**: Shadcn/UI with Radix UI primitives
+- **Components**: Custom React components (ProgressCurve, Header, Sidebar)
 - **Build System**: Next.js static generation (SSG)
 - **Deployment**: Static hosting (Vercel/Netlify)
 
@@ -80,7 +80,7 @@ Key constraints:
 
 - **Timeline**: Framework selection completed Day 1, full implementation by Day 3
 - **Migration Strategy**: N/A (greenfield project)
-- **Rollback Plan**: Component library (Shadcn/UI) provides migration path to other React frameworks
+- **Rollback Plan**: Custom components are framework-agnostic and portable to other React frameworks
 - **Success Metrics**:
   - Build time < 10 seconds
   - Bundle size < 100KB first load
@@ -90,8 +90,8 @@ Key constraints:
 
 - [Next.js 14 Documentation](https://nextjs.org/docs)
 - [Tailwind CSS Best Practices](https://tailwindcss.com/docs/best-practices)
-- [Shadcn/UI Component Library](https://ui.shadcn.com/)
 - [React Security Best Practices](https://react.dev/learn/keeping-components-pure)
+- Related: [ADR-006: Component Library Simplification](./ADR-006-component-library-simplification.md)
 
 ---
 

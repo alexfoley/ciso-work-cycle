@@ -66,7 +66,7 @@ The CISO Work Cycle transforms complex project portfolios into intuitive visual 
 ### Key Features
 - **CSV Data Updates**: Update project data without touching code
 - **95% Test Coverage**: Reliable, battle-tested visualization
-- **WCAG Compliance**: Accessible design for all users
+- **Accessibility Focus**: Good visual design, working toward full WCAG 2.1 AA (FOR-226)
 - **Zero Dependencies**: No backend required, static deployment
 
 ## 🚀 Getting Started
@@ -132,13 +132,13 @@ npm run build
 - **Next.js 14.2.33**: React-based framework with App Router and security patches
 - **TypeScript 5.3.3**: Full type safety ensuring robust, maintainable code
 - **Tailwind CSS 3.4**: Utility-first styling for consistent, responsive design
-- **Shadcn/UI**: Premium component library for professional aesthetics
+- **Custom Components**: Purpose-built visualization components for executive presentations
 
 ### **Advanced Visualization**
 - **Custom SVG Engine**: Hand-crafted curve mathematics for precise project positioning
 - **Responsive Scaling**: Dynamic sizing and positioning across all device types
 - **Performance Optimized**: Efficient rendering with minimal computational overhead
-- **Accessibility Compliant**: WCAG 2.1 AA guidelines adherence for inclusive design
+- **Accessibility Focus**: High contrast design, working toward full WCAG 2.1 AA compliance
 
 ### **Data Architecture**
 - **Type-Safe Data Models**: Strongly typed project definitions prevent runtime errors
@@ -162,10 +162,9 @@ npm run build
 ├── components/
 │   ├── features/              # Core business logic components
 │   │   └── ProgressCurve.tsx  # Main visualization component (95% tested)
-│   ├── layout/                # Layout components
-│   │   ├── Header.tsx         # Application header (100% tested)
-│   │   └── Sidebar.tsx        # Project category sidebars (100% tested)
-│   └── ui/                    # Shadcn/UI component library
+│   └── layout/                # Layout components
+│       ├── Header.tsx         # Application header (100% tested)
+│       └── Sidebar.tsx        # Project category sidebars (100% tested)
 ├── docs/
 │   ├── adr/                   # Architecture Decision Records
 │   ├── data-management.md     # Executive data update guide
@@ -354,7 +353,7 @@ Security is paramount for a CISO tool. We take security seriously:
 - **AGPL-3.0 License**: Source code transparency required (see [LICENSING.md](LICENSING.md))
 - **Third-Party Attributions**: All dependencies documented in [NOTICE](NOTICE)
 - **Static Architecture**: No backend, reduced attack surface
-- **WCAG 2.1 AA Compliant**: Accessible to all users
+- **Accessibility**: Good visual contrast and responsive design, working toward full WCAG 2.1 AA (see FOR-226)
 
 ### Reporting Vulnerabilities
 

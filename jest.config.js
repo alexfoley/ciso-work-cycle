@@ -27,7 +27,6 @@ const customJestConfig = {
     'scripts/**/*.{js,jsx}',
     '!**/*.d.ts',
     '!**/node_modules/**',
-    '!components/ui/**',  // Exclude copied Shadcn UI components (~4000 lines)
   ],
   // Focus coverage on executive-critical functionality
   coverageThreshold: {
