@@ -1,6 +1,3 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
-# SPDX-FileCopyrightText: 2025 Alex Foley
-
 # Executive Data Management Guide
 
 **Target Audience**: CISOs, Executive Assistants, Security Team Members

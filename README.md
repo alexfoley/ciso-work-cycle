@@ -65,7 +65,7 @@ The CISO Work Cycle transforms complex project portfolios into intuitive visual 
 
 ### Key Features
 - **CSV Data Updates**: Update project data without touching code
-- **95% Test Coverage**: Reliable, battle-tested visualization
+- **82% Test Coverage**: Core visualization well-tested, comprehensive test suite
 - **Accessibility Focus**: Good visual design, working toward full WCAG 2.1 AA (FOR-226)
 - **Zero Dependencies**: No backend required, static deployment
 
@@ -288,9 +288,9 @@ npm run build              # Rebuild
 
 This project maintains high testing standards to ensure executive presentation reliability:
 
-- **ProgressCurve**: 95% coverage (26 test cases)
+- **ProgressCurve**: 82% coverage (statements), 93% function coverage (26 test cases)
 - **Header/Sidebar**: 100% coverage (39 test cases)
-- **CSV Workflow**: 100% core function coverage (38 test cases)
+- **CSV Workflow**: 46% overall coverage, 100% core validation function coverage (38 test cases)
 
 ### Running Tests
 

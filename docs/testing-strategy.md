@@ -18,7 +18,13 @@ A single visual glitch or incorrect positioning during an executive presentation
 ## What We Test
 
 ### Core Visualization (ProgressCurve.tsx)
-**Coverage: 95%** - The heart of the tool
+**Coverage: 82%** - The heart of the tool
+
+**Current Coverage (October 2025):**
+- Statements: 82.41%
+- Branches: 66.03% (target: 85%)
+- Lines: 84.29%
+- Functions: 93.02%
 
 We test the mathematical accuracy and visual reliability that executives depend on:
 
@@ -63,10 +69,10 @@ Header and sidebar components provide context and navigation:
 We don't aim for 100% coverage. We aim for **executive confidence**.
 
 Our coverage targets:
-- **ProgressCurve.tsx**: 85%+ (achieved 95%) ✅
+- **ProgressCurve.tsx**: 85%+ target (currently 82%, 93% functions) - Branch coverage improving
 - **Data pipeline**: Focus on validation logic (achieved 46% overall, 100% on core functions) ✅
 - **Layout components**: 70%+ (achieved 100%) ✅
-- **Global project**: Not a primary target - varies based on utility scripts
+- **Global project**: 38-41% (includes untested utility scripts) - Core components exceed 82%
 
 **What we don't test exhaustively**:
 - File I/O and logging in scripts - Tested manually, low risk
@@ -120,7 +126,7 @@ npm run test:watch
 
 Testing for an executive visualization tool isn't about achieving arbitrary coverage percentages. It's about ensuring that when a CISO presents to their board, demonstrates portfolio maturity to stakeholders, or makes strategic decisions based on this visualization, **the tool works flawlessly**.
 
-Our 95% coverage of the core visualization component reflects this priority: we test what matters most for executive confidence and presentation reliability.
+Our 82% coverage of the core visualization component (with 93% function coverage) reflects this priority: we test what matters most for executive confidence and presentation reliability. We continue improving branch coverage to reach our 85% target.
 
 ---
 
