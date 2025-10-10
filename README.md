@@ -66,7 +66,7 @@ The CISO Work Cycle transforms complex project portfolios into intuitive visual 
 ### Key Features
 - **CSV Data Updates**: Update project data without touching code
 - **95% Test Coverage**: Reliable, battle-tested visualization
-- **WCAG Compliance**: Accessible design for all users
+- **Accessibility Focus**: Good visual design, working toward full WCAG 2.1 AA (FOR-226)
 - **Zero Dependencies**: No backend required, static deployment
 
 ## 🚀 Getting Started
@@ -138,7 +138,7 @@ npm run build
 - **Custom SVG Engine**: Hand-crafted curve mathematics for precise project positioning
 - **Responsive Scaling**: Dynamic sizing and positioning across all device types
 - **Performance Optimized**: Efficient rendering with minimal computational overhead
-- **Accessibility Compliant**: WCAG 2.1 AA guidelines adherence for inclusive design
+- **Accessibility Focus**: High contrast design, working toward full WCAG 2.1 AA compliance
 
 ### **Data Architecture**
 - **Type-Safe Data Models**: Strongly typed project definitions prevent runtime errors
@@ -353,7 +353,7 @@ Security is paramount for a CISO tool. We take security seriously:
 - **AGPL-3.0 License**: Source code transparency required (see [LICENSING.md](LICENSING.md))
 - **Third-Party Attributions**: All dependencies documented in [NOTICE](NOTICE)
 - **Static Architecture**: No backend, reduced attack surface
-- **WCAG 2.1 AA Compliant**: Accessible to all users
+- **Accessibility**: Good visual contrast and responsive design, working toward full WCAG 2.1 AA (see FOR-226)
 
 ### Reporting Vulnerabilities
 

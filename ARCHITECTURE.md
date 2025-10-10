@@ -223,11 +223,14 @@ point = path.getPointAtLength(pathLength * position)
 - Resolution support: 4K displays (3840×2160)
 - Print quality: Vector graphics for PDF export
 
-**Accessibility Compliance (WCAG 2.1 AA):**
-- Color contrast ratios: 4.5:1 minimum
-- Keyboard navigation: Full support
-- Screen reader: ARIA labels on all interactive elements
-- Focus indicators: Visible and high contrast
+**Accessibility Status:**
+- ✅ Color contrast ratios: 4.5:1 minimum (verified for text and badges)
+- ✅ Responsive design: Works across screen sizes
+- ⚠️ Keyboard navigation: Todo
+- ⚠️ Screen reader support: Todo
+- ⚠️ ARIA labels: Todo
+
+**Note**: We're actively working toward full WCAG 2.1 AA compliance. Current visual accessibility is good, but functional accessibility for screen readers and keyboard-only users needs enhancement.
 
 ### Data Security Architecture
 
